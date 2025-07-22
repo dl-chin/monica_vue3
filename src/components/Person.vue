@@ -1,11 +1,16 @@
 <template>
   <div class="person">
-    <h2>姓名：{{ name }}</h2>
-    <h2>年龄：{{ age }}</h2>
-    <h2>address: {{ address }}</h2>
-    <button @click="changeName">修改名字</button>
-    <button @click="changeAge">年龄+1</button>
-    <button @click="showTel">点我查看联系方式</button>
+<h2>One car name is {{car.brand}}, price is {{car.price}}</h2>
+    <button @click="changePrice">change price</button>
+    <ul>
+    <li v-for="p in ps" v-bind:key="p.id">{{p.name}}</li>
+    </ul>
+
+    <button @click="changeName">change price</button>
+
+    <hr>
+    <h2>{{obj.a.b.c.name}}</h2>
+    <button @click="changeObj">change price</button>
   </div>
 </template>
 
@@ -16,25 +21,42 @@ export default {
 </script>
 
 <script lang="ts" setup>
-import {ref} from 'vue'
-let name = ref('fiona')
-let age = ref(35)
-let address = 'LiangNing Dalian'
-let tel = '13612345678';
+import {ref, reactive} from 'vue'
+defineOptions({
+  name: 'Person'
+})
+// data
+let car = reactive({brand:'benz', price:100})
+let ps = reactive([
+  {id:'f01', name:'June'},
+  {id:'f02', name:'Fiona'},
+  {id:'f03', name:'Monica'}
+])
+
+let obj = reactive({
+  a:{
+    b:{
+      c:{
+        name:666
+      }
+    }
+  }
+})
+
+// methods
+
+function changePrice() {
+  car.price += 10;
+}
 
 function changeName() {
-  name.value = 'zhang san';
-  console.log(name);
+  ps[0].name = 'Luna'
 }
 
-function changeAge() {
-  age.value += 1;
-  console.log(age);
+function changeObj() {
+  obj.a.b.c.name = 999
 }
 
-function showTel() {
-  alert(tel)
-}
 </script>
 <style>
 .person {
