@@ -6,7 +6,7 @@
     <li v-for="p in ps" v-bind:key="p.id">{{p.name}}</li>
     </ul>
 
-    <button @click="changeName">change price</button>
+    <button @click="changeName">change Name</button>
 
     <hr>
     <h2>{{obj.a.b.c.name}}</h2>
@@ -26,13 +26,15 @@ defineOptions({
   name: 'Person'
 })
 // data
-let car = reactive({brand:'benz', price:100})
-let ps = reactive([
+let car = ref({brand:'benz', price:100})
+let ps = ref([
   {id:'f01', name:'June'},
   {id:'f02', name:'Fiona'},
   {id:'f03', name:'Monica'}
 ])
 
+console.log(car)
+console.log(ps)
 let obj = reactive({
   a:{
     b:{
@@ -46,11 +48,14 @@ let obj = reactive({
 // methods
 
 function changePrice() {
-  car.price += 10;
+  //car.price += 10;
+ // car.value.price += 10;
+ //  car = Object.assign(car, {brand:'Audi', price:200})
+  car.value = {brand:'Toyota', price:50}
 }
 
 function changeName() {
-  ps[0].name = 'Luna'
+  ps.value[0].name = 'Luna'
 }
 
 function changeObj() {
