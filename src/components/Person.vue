@@ -1,31 +1,41 @@
 <template>
   <div class="person">
-    <h1> ref, 基本类型的数据</h1>
-    <h2>SUM: {{sum}} </h2>
-    <button @click="addSum">+1</button>
+    <h1> ref, 对象类型的数据</h1>
+    <h2>Name: {{ p.name }} </h2>
+    <h2>Name: {{ p.age }} </h2>
+
+    <button @click="changeName">Change Name</button>
+    <button @click="changeAge">Change Age</button>
+    <button @click="changePerson">Change Person</button>
   </div>
 </template>
 
 
 <script lang="ts" setup>
 import {ref, reactive, toRefs, computed, watch} from 'vue'
+
 defineOptions({
   name: 'Person'
 })
 // data
-let sum = ref(0)
+let p = ref({name: 'fiona', age: 35})
 
- // function
-function addSum() {
-  sum.value++
+// function
+function changeName() {
+  p.value.name +='~'
+}
+function changeAge() {
+  p.value.age += 1
 }
 
-const stopWatch = watch(sum, (nv,ov)=>{
-  console.log(nv , '---', ov)
-  if (nv > 5) {
-    stopWatch()
-  }
-})
+function changePerson() {
+  p.value = {name: 'Monica', age: 19}
+}
+
+watch(p, (nval,oval) =>{
+  console.log(nval, oval)
+}, {deep: true, immediate: true})
+
 </script>
 <style>
 .person {
