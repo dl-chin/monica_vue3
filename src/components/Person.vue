@@ -1,48 +1,31 @@
 <template>
   <div class="person">
-    name :<input id="name" type="text" v-model="name" /> <br/>
-    age: <input id="age" type="text" v-model="age" ><br/>
-    full name: {{ fullname}}<br/>
-
-    <button @click="changeName">change Name</button>
-    <button @click="changeFullName">change Full Name</button>
+    <h1> ref, 基本类型的数据</h1>
+    <h2>SUM: {{sum}} </h2>
+    <button @click="addSum">+1</button>
   </div>
 </template>
 
-<script lang="ts">
-export default {
-  name: "Person",
-};
-</script>
 
 <script lang="ts" setup>
-import {ref, reactive, toRefs, computed} from 'vue'
+import {ref, reactive, toRefs, computed, watch} from 'vue'
 defineOptions({
   name: 'Person'
 })
 // data
-let props = reactive({name:'fiona', age:35})
-let {name,age} = toRefs(props)
-let fullname = computed({
-  get(){
-    return name.value +'-'+ age.value
-  },
-  set(n){
-    console.log(n)
-    let [n1,n2] = n.split('-')
-    name.value = n1
-    age.value = parseInt(n2)
-
-  }
-})
+let sum = ref(0)
 
  // function
-function changeName(){
-  name.value += '~'
+function addSum() {
+  sum.value++
 }
-function changeFullName(){
-  name.value = 'Monica-35'
-}
+
+const stopWatch = watch(sum, (nv,ov)=>{
+  console.log(nv , '---', ov)
+  if (nv > 5) {
+    stopWatch()
+  }
+})
 </script>
 <style>
 .person {
