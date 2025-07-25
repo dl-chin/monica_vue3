@@ -18,23 +18,23 @@ defineOptions({
   name: 'Person'
 })
 // data
-let p = ref({name: 'fiona', age: 35})
+let p = reactive({name: 'fiona', age: 35})
 
 // function
 function changeName() {
-  p.value.name +='~'
+  p.name +='~'
 }
 function changeAge() {
-  p.value.age += 1
+  p.age += 1
 }
 
 function changePerson() {
-  p.value = {name: 'Monica', age: 19}
+  Object.assign(p, {name:'Luna', age:21})
 }
 
-watch(p, (nval,oval) =>{
-  console.log(nval, oval)
-}, {deep: true, immediate: true})
+watch(p, (newVal, oldVal) => {
+  console.log(newVal, oldVal)
+})
 
 </script>
 <style>
