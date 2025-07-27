@@ -1,53 +1,51 @@
 <template>
   <div class="person">
-    <h1> ref,reactive 对象类型的某个属性</h1>
-    <h2>Name: {{ person.name }} </h2>
-    <h2>Name: {{ person.age }} </h2>
-    <h2>Car 1: {{ person.car.c1 }} </h2>
-    <h2>Car 2: {{ person.car.c2 }} </h2>
+    <h1> 同时监视多个属性</h1>
+    <h2>温度: {{ temperature }} </h2>
+    <h2>湿度: {{ humidity }} </h2>
 
-    <button @click="changeName">Change Name</button>
-    <button @click="changeAge">Change Age</button>
-    <button @click="changeC1">Change C1</button>
-    <button @click="changeC2">Change C2</button>
-    <button @click="changeCar">Change Car</button>
+
+    <button @click="changeTemp">Change temperature</button>
+    <button @click="changeHumi">Change humidity</button>
+
   </div>
 </template>
 
 
 <script lang="ts" setup>
-import {ref, reactive, toRefs, computed, watch} from 'vue'
+import {ref, reactive, toRefs, computed, watch, watchEffect} from 'vue'
 
 defineOptions({
   name: 'Person'
 })
 // data
-let person = reactive({name: 'fiona', age: 35, car:{c1:'benz', c2:'audi'}})
+let temperature = ref(10)
+let humidity = ref(50)
+
 
 // function
-function changeName() {
-  person.name +='~'
+function changeTemp() {
+  temperature.value += 10
 }
-function changeAge() {
-  person.age += 1
-}
-function changeC1() {
-  person.car.c1 = 'yadi'
-}
-function changeC2() {
-  person.car.c2 = 'aima'
-}
-function changeCar() {
-  person.car = {c1:'jiefa', c2:'tongyong'}
+function changeHumi() {
+  humidity.value += 5
 }
 
-// watch(()=>person.name, (newValue, oldValue) => {
 //   console.log(newValue, '--', oldValue)
 //
 // })
-watch(() => person.car, (newValue, oldValue) => {
-   console.log(newValue, '--', oldValue)
- }, {deep: true})
+// watch([temperature, humidity], (newValue) => {
+//   const [temp, humi] = newValue
+//   if (temp >= 50 || humi >= 70 ) {
+//     console.log("send to service~~~")
+//   }
+//   })
+
+watchEffect(() => {
+  if (humidity.value >= 70 || temperature.value >= 50) {
+    console.log("send to service~~~")
+  }
+})
 
 </script>
 <style>
