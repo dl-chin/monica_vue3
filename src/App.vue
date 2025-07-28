@@ -1,13 +1,10 @@
 <template>
-  <Person/>
+  <Person />
+
 </template>
 
-<script lang="ts">
+<script lang="ts" setup name="App">
 import Person from "./components/Person.vue";
 
-export default {
-  name: "App", //组件名
-  components: { Person },
-};
 </script>
 
