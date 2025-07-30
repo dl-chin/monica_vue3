@@ -1,27 +1,23 @@
 <template>
   <div class="person">
-    <h2>{{a}}</h2>
-    <h2>{{b}}</h2>
-    <ul>
-      <li v-for="p in list" :key="p.id">{{p.name}} -- {{p.age}}</li>
-    </ul>
+    <h2>sum is: {{sum}}, {{bigSum}}</h2>
+    <button @click="addOne">add one</button>
+    <hr>
+    <img v-for="(message, index) in dogList" :key="index" :src="message"/>
+    <button @click="addDog">add Dog</button>
   </div>
 </template>
 
 
 <script lang="ts" setup>
-
-import {defineProps, withDefaults} from 'vue'
-import {type PersonInter, type Persons} from "@/types";
-
+import A from '../hooks/useSum.ts'
+import B from '../hooks/useDog.ts'
 defineOptions({
   name: 'Person'
 })
 
-withDefaults(defineProps<{a:string, b:number, list?:Persons}>(),
-    {list:()=> [{id:'t0005', name:'luna', age:18}]} )
-
-//console.log(props)
+const {sum ,bigSum, addOne} = A()
+const {dogList, addDog} = B()
 
 </script>
 <style>
