@@ -1,6 +1,6 @@
 <template>
   <div class="count">
-    <h2>当前求和为：{{ sum }}</h2>
+    <h2>当前求和为：{{ count }},{{ name }},{{ age }}, {{upperName}} ,{{bigCount}}</h2>
     <select v-model.number="n">
       <option value="1">1</option>
       <option value="2">2</option>
@@ -12,17 +12,33 @@
 </template>
 
 <script setup lang="ts" name="Count">
-  import { ref } from "vue";
+import {ref, toRefs} from "vue";
   // 数据
-  let sum = ref(1) // 当前求和
+  //let sum = ref(1) // 当前求和
   let n = ref(1) // 用户选择的数字
+  import { useCountStore} from "@/store/count.ts";
+import {storeToRefs} from "pinia";
 
+  const countStore = useCountStore();
+  const {count, name, age, upperName, bigCount} = storeToRefs(countStore);
+
+  console.log(storeToRefs(countStore));
   // 方法
   function add(){
-    sum.value += n.value
+   // 1
+    // countStore.count += n.value
+    // 2
+/*    countStore.$patch({
+      count: countStore.count + n.value,
+      age:35,
+      name:'fiona'
+
+    })*/
+    countStore.increment(n.value)
+
   }
   function minus(){
-    sum.value -= n.value
+  //  sum.value -= n.value
   }
 </script>
 

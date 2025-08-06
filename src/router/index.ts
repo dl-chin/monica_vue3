@@ -1,73 +1,52 @@
-import Home from "@/pages/Home.vue";
-import {createRouter,createWebHistory} from 'vue-router'
+import { createRouter, createWebHistory } from 'vue-router'
+import Props from '@/pages/01_props/Father.vue'
+import Event from '@/pages/02_custom-event/Father.vue'
+import Bus from '@/pages/03_mitt/Father.vue'
+import Model from '@/pages/04_v-model/Father.vue'
+import AttrsListeners from '@/pages/05_$attrs/Father.vue'
+import RefChildrenParent from '@/pages/06_$refs-$parent/Father.vue'
+import ProvideInject from '@/pages/07_provide-inject/Father.vue'
+import Pinia from '@/pages/08_pinia/Father.vue'
+import Slot from '@/pages/09_slot/Father.vue'
 
-
-const routes = [
-    {
-        path: '/home',
-        component: Home,
-    },
-    {
-        path: '/news',
-        component: () => import('@/pages/News.vue'),
-        children: [
-            {
-                path: 'detail',
-                component: () => import('@/pages/Detail.vue'),
-
-            }
-        ],
-
-
-    },
-    {
-        path: '/haruka/:x/:y/:z',
-        name: 'haruka',
-        component:  () => import('@/pages/Haruka.vue'),
-        beforeEnter: () => {
-            console.log('beforeEnter /haruka')
-
-        },
-
-    },
-    {
-        path: '/fiona/:x/:y/:z',
-        name: 'fiona',
-        component:  () => import('@/pages/Fiona.vue'),
-        props: true,
-        // props(route) {
-        //     console.log('route', route)
-        //     return route.query
-        // }
-
-    },
-    {
-        path: '/',
-        redirect: '/home'
-    }
-]
-
-
-const router = createRouter(
-    {
-        history:createWebHistory(),
-        routes: routes,
-    }
-)
-
-
-router.beforeEach((to, from, next) => {
-    // to: 即将进入的目标路由
-    // from: 当前导航正要离开的路由
-    // next: 必须调用该方法来 resolve 这个钩子
-
-    // 示例：检查用户是否登录
-   // console.log('in->>', to, from, next)
-    next()
+export default createRouter({
+	history: createWebHistory(),
+	routes: [
+		{
+			path: '/props',
+			component: Props
+		},
+		{
+			path: '/event',
+			component: Event
+		},
+		{
+			path: '/mitt',
+			component: Bus
+		},
+		{
+			path: '/model',
+			component: Model
+		},
+		{
+			path: '/attrs',
+			component: AttrsListeners
+		},
+		{
+			path: '/ref-parent',
+			component: RefChildrenParent
+		},
+		{
+			path: '/provide-inject',
+			component: ProvideInject
+		},
+		{
+			path: '/pinia',
+			component: Pinia
+		},
+		{
+			path: '/slot',
+			component: Slot
+		},
+	]
 })
-
-router.afterEach((to, from) => {
-   // console.log('out->>', to, from, next)
-})
-
-export default router;
